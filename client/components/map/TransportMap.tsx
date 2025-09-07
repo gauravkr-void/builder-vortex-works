@@ -81,13 +81,32 @@ export function TransportMap({
   const center = userPos ?? defaultCenter;
 
   return (
-    <div className={"w-full rounded-lg overflow-hidden border " + (className ?? "h-[60vh]")}>
+    <div className={"relative w-full rounded-lg overflow-hidden border " + (className ?? "h-[60vh]")}>
+      <div className="absolute left-3 top-3 z-[1000] flex gap-2">
+        <Button size="sm" variant="secondary" onClick={async () => {
+          try {
+            const r = await fetch('/api/google-location');
+            const j = await r.json();
+            if (r.ok && j.lat && j.lng) {
+              setUserPos({ lat: j.lat, lng: j.lng });
+              toast.success('Located via Google');
+            } else {
+              toast.error(j.error || 'Unable to get Google location');
+            }
+          } catch (e) {
+            toast.error('Location request failed');
+          }
+        }}>Locate me (Google)</Button>
+      </div>
       <MapContainer center={[center.lat, center.lng]} zoom={13} style={{ height: "100%", width: "100%" }}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <Recenter center={center} />
+        {userPos && (
+          <CircleMarker center={[userPos.lat, userPos.lng]} radius={8} pathOptions={{ color: '#2563eb', fillColor: '#3b82f6', fillOpacity: 0.9 }} />
+        )}
         {buses.map((bus) => {
           const route = routes.find((r) => r.id === bus.routeId);
           let eta: ETAInfo | null = null;
