@@ -28,7 +28,7 @@ export default function Dashboard() {
       <Header onSos={() => alert("SOS triggered. Local authorities will be notified in a real app.")} />
       <main className="container mx-auto px-4 py-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="lg:col-span-2 space-y-4">
-          <TransportMap routes={ROUTES} onEta={setLatestEta} notifyTarget={notify} />
+          <TransportMap routes={ROUTES} onEta={setLatestEta} onNotify={(id) => setNotify({ busId: id })} notifyTarget={notify} />
           <Card>
             <CardHeader>
               <CardTitle>ETA</CardTitle>
