@@ -104,10 +104,11 @@ export function TransportMap({
                   )}
                   <div className="text-sm">Driver: {bus.driver.name} ({bus.driver.phone})</div>
                   <div className="text-xs text-muted-foreground">Speed: {bus.speedKmph.toFixed(0)} km/h</div>
-                  {eta && onEta && (
-                    <Button size="sm" className="w-full mt-2" onClick={() => onEta(eta!)}>
-                      Notify when 5 min away
-                    </Button>
+                  {eta && (
+                    <div className="grid grid-cols-2 gap-2 mt-2">
+                      <Button size="sm" onClick={() => onEta && onEta(eta!)}>View ETA</Button>
+                      <Button size="sm" variant="secondary" onClick={() => onNotify && onNotify(bus.id)}>Notify 5 min</Button>
+                    </div>
                   )}
                 </div>
               </Popup>
