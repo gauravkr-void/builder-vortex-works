@@ -30,10 +30,12 @@ function Recenter({ center }: { center: { lat: number; lng: number } }) {
 export function TransportMap({
   routes,
   onEta,
+  onNotify,
   notifyTarget,
 }: {
   routes: RouteInfo[];
   onEta?: (eta: ETAInfo) => void;
+  onNotify?: (busId: string) => void;
   notifyTarget?: { busId: string } | null;
 }) {
   const [buses, setBuses] = useState<Bus[]>([]);
