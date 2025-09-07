@@ -41,11 +41,9 @@ export default function Index() {
               <li>• English + Hindi</li>
             </ul>
           </div>
-          <Card>
-            <CardContent className="p-0">
-              <img src="/placeholder.svg" alt="Map preview" className="w-full h-auto rounded-lg" />
-            </CardContent>
-          </Card>
+          <div>
+            <TransportMap routes={ROUTES} className="h-[50vh]" />
+          </div>
         </div>
       </main>
       <footer className="border-t py-6 text-center text-sm text-muted-foreground">© {new Date().getFullYear()} Transit Lite</footer>
