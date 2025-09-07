@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Header } from "@/components/common/Header";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { LoginDialog } from "@/components/auth/LoginDialog";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { TransportMap } from "@/components/map/TransportMap";
+import { ROUTES } from "@shared/routes";
 
 export default function Index() {
   const [loginOpen, setLoginOpen] = useState(false);
