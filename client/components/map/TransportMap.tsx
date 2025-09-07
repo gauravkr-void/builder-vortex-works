@@ -32,11 +32,13 @@ export function TransportMap({
   onEta,
   onNotify,
   notifyTarget,
+  className,
 }: {
   routes: RouteInfo[];
   onEta?: (eta: ETAInfo) => void;
   onNotify?: (busId: string) => void;
   notifyTarget?: { busId: string } | null;
+  className?: string;
 }) {
   const [buses, setBuses] = useState<Bus[]>([]);
   const [userPos, setUserPos] = useState<{ lat: number; lng: number } | null>(null);
@@ -79,7 +81,7 @@ export function TransportMap({
   const center = userPos ?? defaultCenter;
 
   return (
-    <div className="w-full h-[60vh] rounded-lg overflow-hidden border">
+    <div className={"w-full rounded-lg overflow-hidden border " + (className ?? "h-[60vh]")}>
       <MapContainer center={[center.lat, center.lng]} zoom={13} style={{ height: "100%", width: "100%" }}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
