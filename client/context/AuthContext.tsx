@@ -64,16 +64,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem(STORAGE_KEY);
   };
 
-  const value = useMemo<AuthContextValue>(() => ({
-    user,
-    isAuthenticated: !!user,
-    startLogin,
-    verifyOtp,
-    logout,
-    pendingEmail,
-    otpSentAt,
-    otp,
-  }), [user, pendingEmail, otpSentAt, otp]);
+  const value = useMemo<AuthContextValue>(
+    () => ({
+      user,
+      isAuthenticated: !!user,
+      startLogin,
+      verifyOtp,
+      logout,
+      pendingEmail,
+      otpSentAt,
+      otp,
+    }),
+    [user, pendingEmail, otpSentAt, otp],
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

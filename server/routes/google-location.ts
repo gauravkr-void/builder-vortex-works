@@ -18,9 +18,16 @@ export const handleGoogleLocation: RequestHandler = async (_req, res) => {
       const text = await response.text();
       return res.status(502).json({ error: "Google API error", details: text });
     }
-    const data = (await response.json()) as { location: { lat: number; lng: number } };
+    const data = (await response.json()) as {
+      location: { lat: number; lng: number };
+    };
     return res.json({ lat: data.location.lat, lng: data.location.lng });
   } catch (e: any) {
-    return res.status(500).json({ error: "Failed to fetch location", details: String(e?.message ?? e) });
+    return res
+      .status(500)
+      .json({
+        error: "Failed to fetch location",
+        details: String(e?.message ?? e),
+      });
   }
 };

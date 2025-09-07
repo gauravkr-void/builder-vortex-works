@@ -51,7 +51,10 @@ function jitterPosition(bus: Bus) {
   bus.lat = bus.lat + dLat;
   bus.lng = bus.lng + dLng;
   bus.heading = (bus.heading + (Math.random() - 0.5) * 20 + 360) % 360;
-  bus.speedKmph = Math.max(10, Math.min(40, bus.speedKmph + (Math.random() - 0.5) * 5));
+  bus.speedKmph = Math.max(
+    10,
+    Math.min(40, bus.speedKmph + (Math.random() - 0.5) * 5),
+  );
   bus.lastUpdated = Date.now();
 }
 

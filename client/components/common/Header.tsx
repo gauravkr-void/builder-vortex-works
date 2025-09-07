@@ -4,9 +4,21 @@ import { useI18n } from "@/context/I18nContext";
 import { Button } from "@/components/ui/button";
 import { Sun, Moon, LogIn, LogOut, Shield, Map } from "lucide-react";
 import { useTheme } from "next-themes";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-export function Header({ onLoginClick, onSos }: { onLoginClick?: () => void; onSos?: () => void }) {
+export function Header({
+  onLoginClick,
+  onSos,
+}: {
+  onLoginClick?: () => void;
+  onSos?: () => void;
+}) {
   const { isAuthenticated, user, logout } = useAuth();
   const { t, lang, setLang } = useI18n();
   const { theme, setTheme } = useTheme();
@@ -21,7 +33,9 @@ export function Header({ onLoginClick, onSos }: { onLoginClick?: () => void; onS
             <Map className="text-primary" />
             <span>Transit Lite</span>
           </Link>
-          <span className="hidden sm:inline-block text-muted-foreground">{t("brand")}</span>
+          <span className="hidden sm:inline-block text-muted-foreground">
+            {t("brand")}
+          </span>
         </div>
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" onClick={onSos}>
@@ -36,7 +50,12 @@ export function Header({ onLoginClick, onSos }: { onLoginClick?: () => void; onS
               <SelectItem value="hi">हिन्दी</SelectItem>
             </SelectContent>
           </Select>
-          <Button variant="outline" size="icon" aria-label="Toggle theme" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+          <Button
+            variant="outline"
+            size="icon"
+            aria-label="Toggle theme"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          >
             {theme === "dark" ? <Sun /> : <Moon />}
           </Button>
           {!isAuthenticated ? (
@@ -45,9 +64,16 @@ export function Header({ onLoginClick, onSos }: { onLoginClick?: () => void; onS
             </Button>
           ) : (
             <div className="flex items-center gap-2">
-              <span className="hidden md:inline text-sm text-muted-foreground">{user?.email}</span>
+              <span className="hidden md:inline text-sm text-muted-foreground">
+                {user?.email}
+              </span>
               {location.pathname !== "/dashboard" && (
-                <Button variant="secondary" onClick={() => navigate("/dashboard")}>{t("dashboard")}</Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => navigate("/dashboard")}
+                >
+                  {t("dashboard")}
+                </Button>
               )}
               <Button variant="outline" onClick={logout}>
                 <LogOut /> {t("logout")}

@@ -17,7 +17,9 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (latestEta && latestEta.minutes <= 5) {
-      toast.success(`Bus ${latestEta.busId} ~${latestEta.minutes.toFixed(0)} min away`);
+      toast.success(
+        `Bus ${latestEta.busId} ~${latestEta.minutes.toFixed(0)} min away`,
+      );
     }
   }, [latestEta]);
 
@@ -25,19 +27,35 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header onSos={() => alert("SOS triggered. Local authorities will be notified in a real app.")} />
+      <Header
+        onSos={() =>
+          alert(
+            "SOS triggered. Local authorities will be notified in a real app.",
+          )
+        }
+      />
       <main className="container mx-auto px-4 py-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="lg:col-span-2 space-y-4">
-          <TransportMap routes={ROUTES} onEta={setLatestEta} onNotify={(id) => setNotify({ busId: id })} notifyTarget={notify} />
+          <TransportMap
+            routes={ROUTES}
+            onEta={setLatestEta}
+            onNotify={(id) => setNotify({ busId: id })}
+            notifyTarget={notify}
+          />
           <Card>
             <CardHeader>
               <CardTitle>ETA</CardTitle>
             </CardHeader>
             <CardContent>
               {latestEta ? (
-                <div className="text-lg">Bus {latestEta.busId} • ~{latestEta.minutes.toFixed(0)} min • {(latestEta.distanceMeters/1000).toFixed(1)} km</div>
+                <div className="text-lg">
+                  Bus {latestEta.busId} • ~{latestEta.minutes.toFixed(0)} min •{" "}
+                  {(latestEta.distanceMeters / 1000).toFixed(1)} km
+                </div>
               ) : (
-                <div className="text-muted-foreground">Select a bus marker to view ETA</div>
+                <div className="text-muted-foreground">
+                  Select a bus marker to view ETA
+                </div>
               )}
             </CardContent>
           </Card>
@@ -56,10 +74,22 @@ export default function Dashboard() {
               <CardTitle>Alerts</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <Button className="w-full" onClick={() => setNotify(latestEta ? { busId: latestEta.busId } : null)} disabled={!latestEta}>
+              <Button
+                className="w-full"
+                onClick={() =>
+                  setNotify(latestEta ? { busId: latestEta.busId } : null)
+                }
+                disabled={!latestEta}
+              >
                 Notify me when bus is 5 mins away
               </Button>
-              <Button variant="outline" className="w-full" onClick={() => alert("SOS triggered. Stay safe!")}>Safety / SOS</Button>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={() => alert("SOS triggered. Stay safe!")}
+              >
+                Safety / SOS
+              </Button>
             </CardContent>
           </Card>
         </div>
