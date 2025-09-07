@@ -1,62 +1,54 @@
-import { DemoResponse } from "@shared/api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Header } from "@/components/common/Header";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { LoginDialog } from "@/components/auth/LoginDialog";
+import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Index() {
-  const [exampleFromServer, setExampleFromServer] = useState("");
-  // Fetch users on component mount
-  useEffect(() => {
-    fetchDemo();
-  }, []);
-
-  // Example of how to fetch data from the server (if needed)
-  const fetchDemo = async () => {
-    try {
-      const response = await fetch("/api/demo");
-      const data = (await response.json()) as DemoResponse;
-      setExampleFromServer(data.message);
-    } catch (error) {
-      console.error("Error fetching hello:", error);
-    }
-  };
+  const [loginOpen, setLoginOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-      <div className="text-center">
-        {/* TODO: FUSION_GENERATION_APP_PLACEHOLDER replace everything here with the actual app! */}
-        <h1 className="text-2xl font-semibold text-slate-800 flex items-center justify-center gap-3">
-          <svg
-            className="animate-spin h-8 w-8 text-slate-400"
-            viewBox="0 0 50 50"
-          >
-            <circle
-              className="opacity-30"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-            />
-            <circle
-              className="text-slate-600"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-              strokeDasharray="100"
-              strokeDashoffset="75"
-            />
-          </svg>
-          Generating your app...
-        </h1>
-        <p className="mt-4 text-slate-600 max-w-md">
-          Watch the chat on the left for updates that might need your attention
-          to finish generating
-        </p>
-        <p className="mt-4 hidden max-w-md">{exampleFromServer}</p>
-      </div>
+    <div className="min-h-screen flex flex-col">
+      <Header onLoginClick={() => setLoginOpen(true)} onSos={() => alert("SOS triggered. Stay safe!")} />
+      <main className="container mx-auto px-4 py-12 flex-1 grid items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div className="space-y-6">
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
+              Smart Transport for Small Cities
+            </h1>
+            <p className="text-lg text-muted-foreground max-w-prose">
+              Real-time public transport tracking for Tier-2 cities. Lightweight, fast, and commuter-focused.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {!isAuthenticated ? (
+                <Button size="lg" onClick={() => setLoginOpen(true)}>Login / Signup</Button>
+              ) : (
+                <Button size="lg" onClick={() => navigate("/dashboard")}>Open Dashboard</Button>
+              )}
+              <Button variant="outline" size="lg" onClick={() => alert("SOS triggered. Stay safe!")}>Safety / SOS</Button>
+            </div>
+            <ul className="grid grid-cols-2 gap-3 text-sm text-muted-foreground">
+              <li>• Live bus/auto locations</li>
+              <li>• ETA calculations</li>
+              <li>• Route/stop search</li>
+              <li>• Alerts when 5 mins away</li>
+              <li>• Dark/Light mode</li>
+              <li>• English + Hindi</li>
+            </ul>
+          </div>
+          <Card>
+            <CardContent className="p-0">
+              <img src="/placeholder.svg" alt="Map preview" className="w-full h-auto rounded-lg" />
+            </CardContent>
+          </Card>
+        </div>
+      </main>
+      <footer className="border-t py-6 text-center text-sm text-muted-foreground">© {new Date().getFullYear()} Transit Lite</footer>
+      <LoginDialog open={loginOpen} onOpenChange={setLoginOpen} />
     </div>
   );
 }
